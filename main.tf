@@ -129,6 +129,31 @@ resource "aws_iam_role_policy" "prefect_worker_allow_ecs_task" {
   })
 }
 
+resource "aws_iam_role_policy" "prefect_worker_allow_attach_sg" {
+  name  = "prefect-worker-allow-attach-sg-${var.name}"
+  count = var.worker_task_role_arn == null ? 1 : 0
+  role  = aws_iam_role.prefect_worker_task_role[0].id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "ec2:DescribeNetworkInterfaces",
+          "ec2:DescribeVpcs",
+          "ec2:DescribeSubnets",
+          "ec2:DescribeSecurityGroups",
+          "ec2:CreateNetworkInterface",
+          "ec2:AttachNetworkInterface",
+          "ec2:DeleteNetworkInterface"
+        ]
+        Effect   = "Allow"
+        Resource = "*"
+      }
+    ]
+  })
+}
+
 resource "aws_cloudwatch_log_group" "prefect_worker_log_group" {
   name              = "prefect-worker-log-group-${var.name}"
   retention_in_days = var.worker_log_retention_in_days
