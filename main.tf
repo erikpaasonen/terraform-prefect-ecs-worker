@@ -75,29 +75,29 @@ resource "aws_iam_role_policy" "allow_create_log_group" {
   })
 }
 
-# resource "aws_iam_role_policy" "allow_attach_sg" {
-#   name  = "allow-attach-sg-${var.name}"
-#   role = aws_iam_role.prefect_worker_execution_role.id
-#
-#   policy = jsonencode({
-#     Version = "2012-10-17"
-#     Statement = [
-#       {
-#         Action = [
-#           "ec2:DescribeNetworkInterfaces",
-#           "ec2:DescribeVpcs",
-#           "ec2:DescribeSubnets",
-#           "ec2:DescribeSecurityGroups",
-#           "ec2:CreateNetworkInterface",
-#           "ec2:AttachNetworkInterface",
-#           "ec2:DeleteNetworkInterface"
-#         ]
-#         Effect   = "Allow"
-#         Resource = "*"
-#       }
-#     ]
-#   })
-# }
+resource "aws_iam_role_policy" "allow_attach_sg" {
+  name  = "allow-attach-sg-${var.name}"
+  role = aws_iam_role.prefect_worker_execution_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action = [
+          "ec2:DescribeNetworkInterfaces",
+          "ec2:DescribeVpcs",
+          "ec2:DescribeSubnets",
+          "ec2:DescribeSecurityGroups",
+          "ec2:CreateNetworkInterface",
+          "ec2:AttachNetworkInterface",
+          "ec2:DeleteNetworkInterface"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
 
 resource "aws_iam_role" "prefect_worker_task_role" {
   name  = "prefect-worker-task-role-${var.name}"
@@ -162,6 +162,7 @@ resource "aws_iam_role_policy" "prefect_worker_allow_attach_sg" {
     Version = "2012-10-17"
     Statement = [
       {
+        Effect   = "Allow"
         Action = [
           "ec2:DescribeNetworkInterfaces",
           "ec2:DescribeVpcs",
@@ -171,7 +172,6 @@ resource "aws_iam_role_policy" "prefect_worker_allow_attach_sg" {
           "ec2:AttachNetworkInterface",
           "ec2:DeleteNetworkInterface"
         ]
-        Effect   = "Allow"
         Resource = "*"
       }
     ]
