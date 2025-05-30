@@ -62,7 +62,7 @@ resource "aws_ecs_service" "prefect_worker_service" {
   cluster         = aws_ecs_cluster.prefect_worker_cluster.id
   desired_count   = var.worker_desired_count
   launch_type     = "FARGATE"
-  task_definition = aws_ecs_task_definition.prefect_worker_task_definition.arn
+  task_definition = aws_ecs_task_definition.prefect_worker_task_definition.family
 
   network_configuration {
     assign_public_ip = false
