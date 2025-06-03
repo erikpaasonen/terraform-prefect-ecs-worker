@@ -30,6 +30,10 @@ resource "aws_ecs_task_definition" "prefect_worker_task_definition" {
         {
           name  = "EXTRA_PIP_PACKAGES"
           value = var.worker_extra_pip_packages
+        },
+        {
+          name  = "PREFECT_LOGGING_LEVEL"
+          value = "DEBUG"
         }
       ]
       secrets = [
