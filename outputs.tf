@@ -18,6 +18,10 @@ output "prefect_worker_cluster_name" {
   value = aws_ecs_cluster.prefect_worker_cluster.name
 }
 
+output "prefect_worker_task_definition_arn_without_revision" {
+  value = aws_ecs_task_definition.prefect_worker_task_definition.arn_without_revision
+}
+
 output "prefect_worker_task_definition_family" {
   value = aws_ecs_task_definition.prefect_worker_task_definition.family
 }
