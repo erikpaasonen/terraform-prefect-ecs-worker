@@ -73,4 +73,13 @@ resource "aws_ecs_service" "prefect_worker_service" {
     security_groups  = [aws_security_group.prefect_worker.id]
     subnets          = var.worker_subnets
   }
+
+  lifecycle {
+    replace_triggered_by = [
+      aws_security_group.prefect_worker,
+      aws_security_group_rule.network_outbound,
+      aws_ecs_task_definition.prefect_worker_task_definition,
+      aws_ecs_cluster.prefect_worker_cluster,
+    ]
+  }
 }
