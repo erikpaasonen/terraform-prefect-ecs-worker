@@ -54,7 +54,7 @@ resource "aws_ecs_task_definition" "prefect_worker_task_definition" {
 
   // Task role allows tasks and services to access other AWS resources.
   // Use worker_task_role_arn if provided, otherwise populate with default.
-  task_role_arn = var.worker_task_role_arn == null ? aws_iam_role.prefect_worker_task_role[0].arn : var.worker_task_role_arn
+  task_role_arn = coalesce(var.worker_task_role_arn, aws_iam_role.prefect_worker_task_role.*.arn...)
 }
 
 resource "aws_ecs_service" "prefect_worker_service" {
