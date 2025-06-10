@@ -75,6 +75,32 @@ resource "aws_iam_role_policy" "allow_create_log_group" {
   })
 }
 
+data "aws_iam_policy_document" "allow_attach_sg" {
+  statement {
+    sid = "AllowAttachSecurityGroupsToENI"
+    actions = [
+      "ec2:DescribeNetworkInterfaces",
+      "ec2:DescribeVpcs",
+      "ec2:DescribeSubnets",
+      "ec2:DescribeSecurityGroups",
+      "ec2:CreateNetworkInterface",
+      "ec2:AttachNetworkInterface",
+      "ec2:DeleteNetworkInterface",
+    ]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_policy" "allow_attach_sg" {
+  name_prefix = "allow-attach-sg-${var.name}-"
+  policy = data.aws_iam_policy_document.allow_attach_sg.json
+}
+
+resource "aws_iam_role_policy_attachment" "exec_allow_attach_sg" {
+  role       = aws_iam_role.prefect_worker_execution_role.name
+  policy_arn = aws_iam_policy.allow_attach_sg.arn
+}
+
 resource "aws_iam_role" "prefect_worker_task_role" {
   name  = "prefect-worker-task-role-${var.name}"
   count = var.worker_task_role_arn == null ? 1 : 0
