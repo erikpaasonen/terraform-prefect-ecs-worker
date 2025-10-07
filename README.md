@@ -210,9 +210,12 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_prefect_worker_cluster_name"></a> [prefect\_worker\_cluster\_name](#output\_prefect\_worker\_cluster\_name) | n/a |
-| <a name="output_prefect_worker_execution_role_arn"></a> [prefect\_worker\_execution\_role\_arn](#output\_prefect\_worker\_execution\_role\_arn) | n/a |
-| <a name="output_prefect_worker_security_group"></a> [prefect\_worker\_security\_group](#output\_prefect\_worker\_security\_group) | n/a |
-| <a name="output_prefect_worker_service_id"></a> [prefect\_worker\_service\_id](#output\_prefect\_worker\_service\_id) | n/a |
-| <a name="output_prefect_worker_task_role_arn"></a> [prefect\_worker\_task\_role\_arn](#output\_prefect\_worker\_task\_role\_arn) | n/a |
+| <a name="output_ecs_cluster"></a> [ecs\_cluster](#output\_ecs\_cluster) | Full aws\_ecs\_cluster object for the Prefect worker cluster (all attributes as exposed by the resource). |
+| <a name="output_ecs_service"></a> [ecs\_service](#output\_ecs\_service) | Full aws\_ecs\_service object for the Prefect worker service (all attributes as exposed by the resource). |
+| <a name="output_ecs_task_definition"></a> [ecs\_task\_definition](#output\_ecs\_task\_definition) | Full aws\_ecs\_task\_definition object for the Prefect worker (all attributes as exposed by the resource). |
+| <a name="output_prefect_worker_cluster_name"></a> [prefect\_worker\_cluster\_name](#output\_prefect\_worker\_cluster\_name) | Name of the ECS cluster hosting the Prefect worker service. |
+| <a name="output_prefect_worker_execution_role_arn"></a> [prefect\_worker\_execution\_role\_arn](#output\_prefect\_worker\_execution\_role\_arn) | ARN of the IAM execution role used by the Prefect worker task definition (pull images, write logs). |
+| <a name="output_prefect_worker_security_group"></a> [prefect\_worker\_security\_group](#output\_prefect\_worker\_security\_group) | ID of the security group attached to the Prefect worker service ENIs. |
+| <a name="output_prefect_worker_service_id"></a> [prefect\_worker\_service\_id](#output\_prefect\_worker\_service\_id) | ID of the AWS ECS service that runs the Prefect worker tasks. |
+| <a name="output_prefect_worker_task_role_arn"></a> [prefect\_worker\_task\_role\_arn](#output\_prefect\_worker\_task\_role\_arn) | ARN of the IAM task role assumed by Prefect worker tasks (may be provided via var.worker\_task\_role\_arn or created by this module). |
 <!-- END_TF_DOCS -->
